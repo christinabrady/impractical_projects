@@ -7,14 +7,15 @@ word_list = load_dictionary.load('/usr/share/dict/web2')
 """Find dictionary palingrams."""
 def find_palingrams():
     pali_list = []
-    for word in word_list:
+    words = set(word_list)
+    for word in words:
         end = len(word)
         rev_word = word[::-1]
         if end > 1:
             for i in range(end):
-                if word[i:] == rev_word[:end-i] and rev_word[end-i:] in word_list:
+                if word[i:] == rev_word[:end-i] and rev_word[end-i:] in word:
                     pali_list.append((word, rev_word[end-i:]))
-                if word[:i] == rev_word[end-i:] and rev_word[:end-i] in word_list:
+                if word[:i] == rev_word[end-i:] and rev_word[:end-i] in word:
                     pali_list.append((rev_word[:end-i], word))
     return pali_list
 
@@ -25,8 +26,8 @@ palingrams_sorted = sorted(palingrams)
 
 # display list of palingrams
 print("\nNumber of palingrams = {}\n".format(len(palingrams_sorted)))
-for first, second in palingrams_sorted:
-    print("{} {}".format(first, second))
+# for first, second in palingrams_sorted:
+#     print("{} {}".format(first, second))
 
 ### testing purposes
 # for word in word_list:
