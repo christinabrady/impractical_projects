@@ -5,21 +5,30 @@ word_list = load_dictionary.load('/usr/share/dict/web2')
 
 # find word-pair palingrams udef find_palingrams():
 """Find dictionary palingrams."""
-def find_palingrams():
+
+def is_palindrome(string):
+    """ first check if the string is a palingram """
+    if len(string) <= 1:
+        return True
+    else:
+        first = string[0]
+        last = string[-1]
+        if first == last:
+            return is_palindrome(string[1:-1])
+        else:
+            return False
+
+# is_palingram("rator")
+
+def find_palidromes():
     pali_list = []
     words = set(word_list)
     for word in words:
-        end = len(word)
-        rev_word = word[::-1]
-        if end > 1:
-            for i in range(end):
-                if word[i:] == rev_word[:end-i] and rev_word[end-i:] in word:
-                    pali_list.append((word, rev_word[end-i:]))
-                if word[:i] == rev_word[end-i:] and rev_word[:end-i] in word:
-                    pali_list.append((rev_word[:end-i], word))
+        if is_palindrome(word):
+            pali_list.append(word)
     return pali_list
 
-palingrams = find_palingrams()
+palingrams = find_palidromes()
 # sort palingrams on first word
 
 palingrams_sorted = sorted(palingrams)
